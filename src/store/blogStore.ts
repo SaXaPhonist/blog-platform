@@ -1,26 +1,52 @@
+import { PostWithImage } from '@/shared/types/posts'
 import { create } from 'zustand'
-
-interface Post {
-  id: number
-  title: string
-  body: string
-  userId: number
-}
+import { persist } from 'zustand/middleware'
 
 interface BlogStore {
-  posts: Post[]
+  posts: PostWithImage[]
   searchQuery: string
-  isLoading: boolean
-  setPosts: (posts: Post[]) => void
+  isInitialLoading: boolean
+  isLoadingMore: boolean
+  page: number
+  hasMore: boolean
+  theme: 'light' | 'dark'
+  setPosts: (posts: PostWithImage[]) => void
+  appendPosts: (posts: PostWithImage[]) => void
   setSearchQuery: (query: string) => void
-  setLoading: (loading: boolean) => void
+  setInitialLoading: (loading: boolean) => void
+  setLoadingMore: (loading: boolean) => void
+  setPage: (page: number) => void
+  setHasMore: (hasMore: boolean) => void
+  fetchPosts?:  () => void 
+  toggleTheme: () => void
 }
 
-export const useBlogStore = create<BlogStore>((set) => ({
-  posts: [],
-  searchQuery: '',
-  isLoading: false,
-  setPosts: (posts) => set({ posts }),
-  setSearchQuery: (query) => set({ searchQuery: query }),
-  setLoading: (loading) => set({ isLoading: loading }),
-})) 
+export const useBlogStore = create<BlogStore>()(
+  persist(
+    (set) => ({
+      posts: [],
+      searchQuery: '',
+      isInitialLoading: true,
+      isLoadingMore: false,
+      page: 1,
+      hasMore: true,
+      theme: 'light',
+      setPosts: (posts) => set({ posts }),
+      appendPosts: (newPosts) => set((state) => ({ 
+        posts: [...state.posts, ...newPosts] 
+      })),
+      setSearchQuery: (query) => set({ searchQuery: query }),
+      setInitialLoading: (loading) => set({ isInitialLoading: loading }),
+      setLoadingMore: (loading) => set({ isLoadingMore: loading }),
+      setPage: (page) => set({ page }),
+      setHasMore: (hasMore) => set({ hasMore }),
+      toggleTheme: () => set((state) => ({ 
+        theme: state.theme === 'light' ? 'dark' : 'light' 
+      })),
+    }),
+    {
+      name: 'blog-storage',
+      partialize: (state) => ({ theme: state.theme }),
+    }
+  )
+) 
