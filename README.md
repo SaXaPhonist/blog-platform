@@ -1,4 +1,5 @@
 # Next.js Dynamic Blog Platform
+ [Deployment](https://blog-platform-2pg5ghwed-dfdf1534gmailcoms-projects.vercel.app/)
 
 ## Overview
 
