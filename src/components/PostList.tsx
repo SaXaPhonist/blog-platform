@@ -14,6 +14,7 @@ interface PostListProps {
 
 export default function PostList({ initialPostsPromise }: PostListProps) {
   const initialPosts = use(initialPostsPromise)
+  console.log('init', initialPosts)
   const {
     posts,
     setPosts,
@@ -37,9 +38,9 @@ export default function PostList({ initialPostsPromise }: PostListProps) {
   
   useEffect(() => {
       setPosts(filteredPosts.slice(0, 6))
-      setHasMore(filteredPosts.length > 6)
+      setHasMore(initialPosts.length > 6)
 
-  }, [filteredPosts, setHasMore, setPosts])
+  }, [filteredPosts, initialPosts.length, setHasMore, setPosts])
 
   const loadMore = useCallback(async () => {
     setLoadingMore(true)

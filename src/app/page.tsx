@@ -7,7 +7,6 @@ import { PostSkeleton } from '@/components/PostsSkeleton'
 
 export default async function Home() {
   const posts = getPosts()
-  console.log('POSTS in home', posts)
   return (
     <div className="space-y-8">
       <h1 className="text-4xl font-bold">Blog Platform</h1>
