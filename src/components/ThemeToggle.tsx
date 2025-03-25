@@ -14,7 +14,6 @@ export default function ThemeToggle() {
   }, [toggleTheme])
 
   useEffect(() => {
-    // Проверяем сохраненную тему или системные настройки
     const savedTheme = localStorage.getItem('blog-storage')
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
