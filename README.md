@@ -1,5 +1,5 @@
 # Next.js Dynamic Blog Platform
- [Deployment](blog-platform-xi-wine.vercel.app)
+ [Deployment](https://blog-platform-xi-wine.vercel.app)
 
 ## Overview
 
